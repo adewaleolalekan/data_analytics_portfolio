@@ -1,6 +1,7 @@
-# 📊 Data Analytics Portfolio by [Your Name]
+# 📊 Data Analytics Portfolio by Adewale Olalekan
 
-Welcome to my Data Analytics Portfolio! This repository showcases a collection of real-world projects that demonstrate my ability to gather, clean, analyze, and visualize data to extract actionable insights. These projects were completed as part of my journey through the **Google Data Analytics Professional Certificate** and beyond.
+Welcome to my Data Analytics Portfolio! This repository features a collection of real-world projects that demonstrate my ability to collect, clean, analyze, and visualize data.  
+Each project is presented as a **dedicated HTML page** hosted via **GitHub Pages**, allowing for a richer and more interactive experience.
 
 ---
 
@@ -40,15 +41,13 @@ Welcome to my Data Analytics Portfolio! This repository showcases a collection o
 
 ---
 
-## 🚀 How to Explore
+## 🗂 Project Structure
 
 Each project is contained in its own folder and includes:
-
-- A short project brief
-- Data sources or links to datasets
-- Step-by-step analysis
-- Visualizations (where applicable)
-- Final conclusions or business recommendations
+- `index.html` → the published project page
+- Visuals, summary, and findings
+- Tools and datasets used
+- Business insights and recommendations
 
 ---
 
