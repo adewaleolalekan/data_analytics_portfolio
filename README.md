@@ -18,7 +18,7 @@ Each project is presented as a **dedicated HTML page** hosted via **GitHub Pages
 ## 📁 Projects
 
 
-### 1. 🐾 [Social Buzz: Top 5 Most Popular Content Categories](https://github.com/adewaleolalekan/data_analytics_portfolio/social_buzz/)
+### 1. 🐾 [Social Buzz: Top 5 Most Popular Content Categories](https://adewaleolalekan.github.io/data_analytics_portfolio/social_buzz/)
 
 **Tools Used**: Google Sheets, Excel, Google Slides  
 **Description**:  
