@@ -17,9 +17,20 @@ Each project is presented as a **dedicated HTML page** hosted via **GitHub Pages
 
 ## 📁 Projects
 
-### 1. [Bellabeat Case Study](link-to-project-folder)
-**Tools**: R, ggplot2, dplyr, tidyr  
-**Description**: Performed end-to-end analysis on smart device usage data for a wellness tech company. Generated insights and recommendations to improve user engagement and product development.
+
+### 1. 🐾 [Social Buzz: Top 5 Most Popular Content Categories](https://github.com/adewaleolalekan/data_analytics_portfolio/social_buzz/)
+
+**Tools Used**: Google Sheets, Excel, Google Slides  
+**Description**:  
+Analyzed over 100,000 content posts across text, image, video, and GIF formats to identify the top 5 most engaging content categories for Social Buzz, a social media company preparing for IPO. The project included a data infrastructure audit and engagement-based content evaluation.
+
+**Key Insights**:
+- 🐶 **Animals** had the highest engagement score (74,965), indicating strong user interest in animal content.
+- 🧪 **Science** (71,168) and 🥗 **Healthy Eating** (69,339) are rapidly growing in popularity.
+- 💻 **Technology** (68,738) and 🍽 **Food** (66,676) maintained steady engagement across users.
+
+**Outcome**:  
+Delivered actionable insights to enhance Social Buzz’s content strategy and support its IPO preparation through improved data-driven decision-making.
 
 ---
 
