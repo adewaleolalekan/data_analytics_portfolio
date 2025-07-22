@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Buzz Content Analysis - A Data-Driven Study</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eeeeee;
+        }
+        header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 0;
+        }
+        header p {
+            font-size: 1.1em;
+            color: #7f8c8d;
+        }
+        section {
+            padding: 20px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+        h2 {
+            color: #34495e;
+            font-size: 2em;
+            margin-top: 0;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+        .team-member {
+            background: #fdfdfd;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
+        }
+        .team-member h3 {
+            margin: 10px 0 5px 0;
+            color: #2980b9;
+        }
+        .team-member p {
+            margin: 0;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .process-grid {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            flex-wrap: wrap;
+        }
+        .process-step {
+            width: 150px;
+            margin: 10px;
+        }
+        .process-step .number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #8e44ad;
+            background-color: #f3e5f5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 auto 10px;
+        }
+        .charts {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .charts img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .insights-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .insights-list li {
+            background: #ecf0f1;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            border-radius: 4px;
+        }
+        .insights-list b {
+            color: #2980b9;
+        }
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 0.9em;
+            color: #95a5a6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Social Buzz: A Data-Driven Analysis of Popular Content Categories</h1>
+            <p>An analytics project to drive content strategy and prepare for a successful IPO.</p>
+        </header>
+
+        <section>
+            <h2>Project Overview</h2>
+            <p>This project was undertaken for our client, <strong>Social Buzz</strong>, a prominent social media and content creation platform. [cite_start]The primary objective was to audit their big data practices and analyze content engagement to inform their strategy leading up to their Initial Public Offering (IPO)[cite: 14, 15].</p>
+            <p><strong>Key deliverables included:</strong></p>
+            <ul>
+                [cite_start]<li>An audit of their data infrastructure and optimization of big data practices[cite: 17].</li>
+                [cite_start]<li>A detailed analysis identifying the top 5 most popular content categories[cite: 18].</li>
+                [cite_start]<li>Actionable insights and clear data management strategies to ensure a smooth IPO[cite: 22].</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The Challenge</h2>
+            [cite_start]<p>Social Buzz generates a massive volume of unstructured data, with over 100,000 pieces of new content posted daily across various formats like text, images, and videos[cite: 24]. The company lacked clear insights into which content categories were most effective at driving user engagement. [cite_start]This made it difficult to optimize content strategy and enhance user interaction on the platform[cite: 25]. [cite_start]The challenge was to analyze this data to identify the top 5 content categories with the highest aggregate popularity[cite: 26].</p>
+        </section>
+
+        <section>
+            <h2>The Analytics Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    [cite_start]<h3>Andrew Fleming [cite: 29]</h3>
+                    [cite_start]<p>Chief Technology Architect [cite: 29]</p>
+                </div>
+                <div class="team-member">
+                    [cite_start]<h3>Marcus Rompton [cite: 33]</h3>
+                    [cite_start]<p>Senior Principal [cite: 33]</p>
+                </div>
+                <div class="team-member">
+                    [cite_start]<h3>Michelle Grove [cite: 34]</h3>
+                    [cite_start]<p>Data Scientist [cite: 34]</p>
+                </div>
+                <div class="team-member">
+                    [cite_start]<h3>Adewale Olalekan [cite: 35]</h3>
+                    [cite_start]<p>Data Analyst [cite: 35]</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Our Process</h2>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="number">1</div>
+                    [cite_start]<p>Data Cleaning [cite: 37]</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">2</div>
+                    [cite_start]<p>Data Linking [cite: 38]</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">3</div>
+                    [cite_start]<p>Popularity Calculation [cite: 40]</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">4</div>
+                    [cite_start]<p>Results Sorting [cite: 42]</p>
+                </div>
+                <div class="process-step">
+                    <div class="number">5</div>
+                    [cite_start]<p>Visualization [cite: 44]</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Top 5 Performing Categories & Key Insights</h2>
+            <p>The analysis successfully identified the top five content categories that generate the most user engagement. The results provide a clear path for Social Buzz to refine its content strategy.</p>
+            <div class="charts">
+                <img src="https://i.imgur.com/8Qp5Y6b.png" alt="Bar chart showing the top 5 performing categories: Animals, Science, Healthy Eating, Technology, Food.">
+                <img src="https://i.imgur.com/k9vLwbf.png" alt="Pie chart showing the percentage breakdown of the top 5 categories.">
+            </div>
+            <div class="insights-list">
+                <ul>
+                    <li>
+                        <strong>1. [cite_start]Animal-Related Content Dominates Engagement:</strong> With the highest engagement score of <strong>74,965 (21.4%)</strong>, content related to animals is a clear winner[cite: 50, 74].<br>
+                        <em>Insight:</em> Users show a strong affinity for animal content. [cite_start]Social Buzz should prioritize and expand this category to maximize growth[cite: 51, 99].
+                    </li>
+                    <li>
+                        <strong>2. [cite_start]Science and Healthy Eating Are Rising Stars:</strong> The Science category (71,168 or 20.3%) and Healthy Eating (69,339 or 19.8%) are close contenders for the top spot[cite: 54, 79, 82].<br>
+                        <em>Insight:</em> There is a growing appetite for educational and wellness content. [cite_start]Investing in these areas will likely boost user engagement further[cite: 55, 102].
+                    </li>
+                    <li>
+                        <strong>3. [cite_start]Steady Engagement in Technology and Food:</strong> Technology (68,738 or 19.6%) and Food (66,676 or 19.0%) demonstrate consistent and strong user interest[cite: 57, 73, 77].<br>
+                        <em>Insight:</em> These core categories have a stable audience. [cite_start]To drive more interaction, Social Buzz could focus on emerging tech trends and create interactive food content like recipe challenges[cite: 59, 106].
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Summary & Recommendations</h2>
+            <p>The data provides a clear narrative: while users love feel-good content like <strong>Animals</strong>, there is significant and growing interest in self-improvement categories like <strong>Science</strong> and <strong>Healthy Eating</strong>. Meanwhile, evergreen topics like <strong>Technology</strong> and <strong>Food</strong> remain pillars of engagement.</p>
+            <p>Our recommendation is for Social Buzz to adopt a three-pronged strategy:</p>
+            <ol>
+                <li><strong>Capitalize on the Leader:</strong> Double down on creating and promoting animal-related content.</li>
+                <li><strong>Invest in the Rising Stars:</strong> Develop more high-quality educational and wellness content to meet growing user demand.</li>
+                <li><strong>Innovate the Staples:</strong> Refresh the technology and food categories with modern, interactive formats to maintain and grow their dedicated audience.</li>
+            </ol>
+            <p>By implementing these data-driven strategies, Social Buzz can significantly enhance user engagement, optimize its content offerings, and position itself strongly for a successful IPO.</p>
+        </section>
+
+        <footer>
+            <p>Portfolio piece created based on the "Social Buzz" project presentation.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
