@@ -40,9 +40,9 @@ Delivered actionable insights to enhance Social Buzz’s content strategy and su
 
 ---
 
-### 3. [Sales Performance Dashboard](link-to-project-folder)
-**Tools**: Excel, Tableau  
-**Description**: Created a dynamic dashboard tracking monthly sales, revenue trends, and top-performing products. Supported decision-making through clear visuals and KPIs.
+### 3. [Clean data in spreadsheets with sorting and filtering](https://adewaleolalekan.github.io/data_analytics_portfolio/sort_and_filter/)
+**Tools**: Google Sheets, Excel  
+**Description**: Use sorting and filtering to clean up a dirty dataset.
 
 ---
 
