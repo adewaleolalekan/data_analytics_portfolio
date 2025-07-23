@@ -34,7 +34,7 @@ Delivered actionable insights to enhance Social Buzz’s content strategy and su
 
 ---
 
-### 2. [A Guide to Wide vs. Long Data]([link-to-project-folder](https://adewaleolalekan.github.io/data_analytics_portfolio/wide_vs_long_data/)
+### 2. [A Guide to Wide vs. Long Data](https://adewaleolalekan.github.io/data_analytics_portfolio/wide_vs_long_data/)
 **Tools**: Google Sheets, Excel  
 **Description**: A practical guide that explains the fundamental concepts of wide and long data formats.
 
