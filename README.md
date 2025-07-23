@@ -42,13 +42,13 @@ Delivered actionable insights to enhance Social Buzz’s content strategy and su
 
 ### 3. [Clean data in spreadsheets with sorting and filtering](https://adewaleolalekan.github.io/data_analytics_portfolio/sort_and_filter/)
 **Tools**: Google Sheets, Excel  
-**Description**: Use sorting and filtering to clean up a dirty dataset.
+**Description**: Using sorting and filtering to clean up a dirty dataset.
 
 ---
 
-### 4. [COVID-19 Global Impact Analysis](link-to-project-folder)
-**Tools**: SQL, Python (pandas, matplotlib), Google Colab  
-**Description**: Aggregated and analyzed COVID-19 data to uncover global and regional trends. Produced time-series plots and summary reports for public awareness and policy-making.
+### 4. [Choosing the Right Tool for the Job](https://adewaleolalekan.github.io/data_analytics_portfolio/right_tool/)
+**Tools**: SQL, Google Sheets, Excel  
+**Description**: A case study on selecting the appropriate data analysis tool—Spreadsheets vs. SQL—based on real-world business scenarios.
 
 ---
 
