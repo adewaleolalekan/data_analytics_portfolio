@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Choosing the Right Tool for the Job</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text-orange {
+            background: linear-gradient(to right, #F97316, #EA580C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header Section -->
+        <header class="text-center py-12 md:py-16">
+            <h1 class="text-4xl md:text-6xl font-bold gradient-text-orange mb-4">Choosing the Right Tool for the Job</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A case study on selecting the appropriate data analysis tool—Spreadsheets vs. SQL—based on real-world business scenarios.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="space-y-8">
+
+            <!-- Scenario 1 -->
+            <div class="bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">1</span>
+                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Identifying Top 10 Pet Supply Products</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
+                        <p class="text-gray-700">A major online pet supplies business needs to identify the top 10 products with the highest sales in the last month. The data is spread across multiple tables in the company's database (one for product details, another for sales data).</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                            <p class="font-bold text-orange-800">Tool: SQL</p>
+                            <p class="text-orange-700">SQL is the ideal choice here. The data lives in a relational database, and the task requires joining data from multiple tables (products and sales). SQL is designed for exactly this kind of complex query, efficiently handling large datasets and complex relationships far better than a spreadsheet could.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <div class="bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">2</span>
+                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Determining a New Store Location</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
+                        <p class="text-gray-700">A small fitness tech company needs to find which cities have a large customer population to decide on a new retail store location. The data is a single `.csv` file with 300 customer addresses. A simple visualization, like a bar chart, is also required.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                            <p class="font-bold text-orange-800">Tool: Spreadsheet</p>
+                            <p class="text-orange-700">A spreadsheet is the perfect tool for this task. The dataset is very small (300 rows) and comes in a simple `.csv` format. Spreadsheets make it easy to quickly sort, filter by city, count customers, and create a simple bar chart for comparison—all without the need for a database setup.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <div class="bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">3</span>
+                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Analyzing Customer Satisfaction Surveys</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
+                        <p class="text-gray-700">A fashion retailer's marketing team has customer satisfaction survey results in a `.csv` file. They need to calculate the average satisfaction score and segment the responses by demographics (age, gender, location) to tailor marketing strategies.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                            <p class="font-bold text-orange-800">Tool: Spreadsheet</p>
+                            <p class="text-orange-700">While SQL could be used if the dataset were massive, a spreadsheet is more appropriate here. For a typical survey dataset provided as a `.csv`, a spreadsheet offers powerful and accessible tools like PivotTables to easily calculate average scores and segment data by various demographics without any complex setup.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <div class="bg-white p-8 rounded-2xl shadow-md">
+                <div class="flex items-center mb-4">
+                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">4</span>
+                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Calculating Course Completion Rates</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
+                        <p class="text-gray-700">An online education platform needs to identify courses with the lowest completion rates. The data is stored in a relational database with separate tables for user registration, course enrollment, and course completion.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
+                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                            <p class="font-bold text-orange-800">Tool: SQL</p>
+                            <p class="text-orange-700">This is a classic use case for SQL. The data is in a relational database, and calculating completion rates requires joining information across multiple tables (enrollment vs. completion). SQL can perform these joins and aggregations efficiently across what is likely a very large dataset, making it the superior choice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 mt-8 border-t border-gray-200">
+            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
