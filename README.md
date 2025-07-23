@@ -34,9 +34,9 @@ Delivered actionable insights to enhance Social Buzz’s content strategy and su
 
 ---
 
-### 2. [Cyclistic Bike-Share Analysis](link-to-project-folder)
-**Tools**: R, SQL, Excel, Tableau  
-**Description**: Analyzed a year’s worth of bike-share trip data to identify patterns between casual and member riders. Developed data-driven marketing strategies to convert more casual riders into members.
+### 2. [A Guide to Wide vs. Long Data]([link-to-project-folder](https://adewaleolalekan.github.io/data_analytics_portfolio/wide_vs_long_data/)
+**Tools**: Google Sheets, Excel  
+**Description**: A practical guide that explains the fundamental concepts of wide and long data formats.
 
 ---
 
