@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Cleaning Student Performance Data</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-text-green {
+            background: linear-gradient(to right, #16A34A, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Main Container -->
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header Section -->
+        <header class="text-center py-12 md:py-16">
+            <h1 class="text-4xl md:text-6xl font-bold gradient-text-green mb-4">Data Cleaning Case Study</h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Preparing a student performance dataset for analysis using sorting and filtering techniques in spreadsheets.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="space-y-12">
+
+            <!-- Project Overview Section -->
+            <section class="grid md:grid-cols-5 gap-8 items-center bg-white p-8 rounded-2xl shadow-md">
+                <div class="md:col-span-3">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Project Scenario</h2>
+                    <p class="text-gray-700 mb-4">
+                        As a data analyst for a large public school district in Portugal, I was tasked with preparing a dataset for an upcoming analysis. The superintendent wanted to understand the factors affecting student grades in two high schools: Gabriel Pereira (GP) and Mouzinho da Silveira (MS).
+                    </p>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">The Challenge</h3>
+                    <p class="text-gray-700">
+                        The raw dataset, collected from academic reports and student surveys, contained student grades, background information, and study habits. However, before any analysis could be performed, it was critical to clean the data. An analysis based on "dirty" data—data with incorrect, missing, or faulty values—could lead to flawed conclusions and ineffective policy changes.
+                    </p>
+                </div>
+                <div class="md:col-span-2">
+                    <img src="https://placehold.co/600x400/D1FAE5/059669?text=Student+Data" alt="Illustration of data charts" class="rounded-lg shadow-md w-full h-auto">
+                </div>
+            </section>
+
+            <!-- Data Cleaning Process Section -->
+            <section class="bg-white p-8 rounded-2xl shadow-md">
+                <h2 class="text-3xl font-bold text-center mb-10">My Data Cleaning Process</h2>
+                <div class="relative max-w-2xl mx-auto">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-6 top-0 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
+
+                    <!-- Step 1 -->
+                    <div class="relative pl-12 pb-12">
+                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">1</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Initial Exploration with Sorting</h3>
+                        <p class="text-gray-700">My first step was to get a feel for the data. I performed a multi-level sort on the entire dataset: first by `school` (A-Z), and then by `age` (Z-A). This immediately organized the data and revealed a potential issue: the age range for students in both high schools appeared to be 15-22. Since the dataset was for high school students, ages over 19 were highly suspicious and likely data entry errors.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative pl-12 pb-12">
+                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">2</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Removing Invalid Data with Filtering</h3>
+                        <p class="text-gray-700">After confirming with the superintendent that the valid age range was 15-19, I needed to remove the incorrect entries. I applied a filter to the `age` column and selected only the invalid ages (20, 21, and 22). This isolated the nine rows containing incorrect data, which I then deleted from the spreadsheet, ensuring the age data was now accurate.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative pl-12 pb-12">
+                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">3</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Handling Missing Data</h3>
+                        <p class="text-gray-700">The `reason` column, which explained why a student chose their school, was important for the analysis but contained several blank cells. To handle this, I filtered the `reason` column to show only the blanks. Since I couldn't know the actual reason for each student, I filled these missing values with a consistent placeholder, `none_given`, using the fill handle feature to apply the change to all blank cells efficiently.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative pl-12">
+                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">4</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Transforming Data for Analysis</h3>
+                        <p class="text-gray-700">The final cleaning task involved the `Medu` (mother's education) and `Fedu` (father's education) columns. The data was in text format (e.g., "higher education"), which isn't suitable for many statistical calculations. To prepare for analysis, I converted this text data into numerical codes (e.g., "higher education" became `4`). I used the "Find and Replace" function to systematically replace each education level with its corresponding numeric code across both columns.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Outcome Section -->
+            <section class="bg-green-700 text-white p-8 rounded-2xl shadow-lg text-center">
+                 <h2 class="text-3xl font-bold mb-4">Project Outcome</h2>
+                <p class="text-lg max-w-3xl mx-auto">
+                    Through this methodical process of sorting, filtering, and transforming the data, I successfully cleaned the student performance dataset. The result was a reliable, accurate, and properly formatted dataset, ready for the analysis phase. This foundational work is critical to ensure that the insights derived for the school district are valid and can lead to effective, data-driven decisions.
+                </p>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="text-center py-8 mt-8 border-t border-gray-200">
+            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
