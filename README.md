@@ -106,9 +106,9 @@ Each project is contained in its own folder and includes:
 
 ## 📌 Certifications
 
-- [Google Data Analytics Professional Certificate](https://coursera.org/verify/professional-cert/A26CF2B47KBU){target="_blank"}
-- [DeepLearning.AI Data Analysis Professional Certificate](https://coursera.org/verify/professional-cert/ASUW8HX98NP6){target="_blank"}
-- [Harvard Business School Online Credential of Readiness](https://online.hbs.edu/verify-certificate?dvid=1BY73U8X){target="_blank"}
+- <a href="https://coursera.org/verify/professional-cert/A26CF2B47KBU" target="_blank" rel="noopener">Google Data Analytics Professional Certificate</a>
+- <a href="https://coursera.org/verify/professional-cert/ASUW8HX98NP6" target="_blank" rel="noopener">DeepLearning.AI Data Analysis Professional Certificate</a>
+- <a href="https://online.hbs.edu/verify-certificate?dvid=1BY73U8X" target="_blank" rel="noopener">Harvard Business School Online Credential of Readiness</a>
 
 ---
 
