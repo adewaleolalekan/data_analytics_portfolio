@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Google Maps Lead Scraper – Adewale Olalekan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --purple-deep:   #4A00E0;
+      --purple-mid:    #7B2FFF;
+      --purple-light:  #E2D9FF;
+      --purple-pale:   #F3EFFF;
+      --ink:           #1a1a2e;
+      --ink-soft:      #3d3d5c;
+      --ink-muted:     #7a7a9a;
+      --white:         #ffffff;
+      --surface:       #fafafa;
+      --border:        #e8e4f5;
+      --terminal-bg:   #0f0f1a;
+      --terminal-green:#4ade80;
+      --terminal-cyan: #67e8f9;
+      --terminal-dim:  #6b7280;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      height: 56px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--ink-muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--purple-deep); }
+    nav .sep { color: var(--border); }
+    nav .current { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a0a3d 50%, #0d1f3c 100%);
+      color: var(--white);
+      padding: 5rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(74,0,224,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(103,232,249,0.1) 0%, transparent 50%);
+    }
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(123,47,255,0.3);
+      border: 1px solid rgba(123,47,255,0.5);
+      color: #c4b5fd;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: #c4b5fd;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #a8a8cc;
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .meta-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: #a8a8cc;
+    }
+    .meta-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--terminal-green);
+      flex-shrink: 0;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    section { margin-bottom: 4rem; }
+
+    h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.9rem;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+    }
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--purple-deep);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+      margin-top: 1.8rem;
+    }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+    .feature-card {
+      background: var(--purple-pale);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(74,0,224,0.1);
+    }
+    .feature-card .icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+    .feature-card strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+    .feature-card p {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ── TERMINAL BLOCK ── */
+    .terminal {
+      background: var(--terminal-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.25);
+    }
+    .terminal-bar {
+      background: #1e1e2e;
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .t-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+    }
+    .t-dot.red   { background: #ff5f57; }
+    .t-dot.amber { background: #febc2e; }
+    .t-dot.green { background: #28c840; }
+    .terminal-label {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--terminal-dim);
+    }
+    .terminal-body {
+      padding: 1.4rem 1.6rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+    }
+    .t-prompt { color: var(--terminal-green); }
+    .t-cmd    { color: var(--white); }
+    .t-flag   { color: var(--terminal-cyan); }
+    .t-val    { color: #fbbf24; }
+    .t-out    { color: var(--terminal-dim); }
+    .t-success{ color: var(--terminal-green); }
+    .t-warn   { color: #fb923c; }
+
+    /* ── PIPELINE STEPS ── */
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 1.5rem;
+      position: relative;
+    }
+    .pipeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--purple-deep), var(--purple-light));
+    }
+    .step {
+      display: flex;
+      gap: 1.2rem;
+      padding: 1rem 0;
+      position: relative;
+    }
+    .step-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--purple-deep);
+      color: var(--white);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .step-content strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
+    }
+    .step-content p {
+      font-size: 0.88rem;
+      margin: 0;
+    }
+
+    /* ── TECH STACK ── */
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+    .tech-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      background: var(--purple-pale);
+      border: 1px solid var(--border);
+      color: var(--purple-deep);
+      font-weight: 500;
+    }
+
+    /* ── OUTPUT TABLE ── */
+    .output-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      margin-top: 1.2rem;
+      overflow-x: auto;
+      display: block;
+    }
+    .output-table th {
+      background: var(--ink);
+      color: var(--white);
+      text-align: left;
+      padding: 0.6rem 0.9rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .output-table td {
+      padding: 0.55rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink-soft);
+      white-space: nowrap;
+    }
+    .output-table tr:nth-child(even) td { background: var(--purple-pale); }
+    .output-table tr:hover td { background: var(--purple-light); }
+
+    /* ── LINKS ── */
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--purple-deep);
+      color: var(--white);
+    }
+    .btn-primary:hover {
+      background: var(--purple-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(74,0,224,0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--purple-deep);
+      border: 2px solid var(--purple-deep);
+    }
+    .btn-outline:hover {
+      background: var(--purple-pale);
+      transform: translateY(-2px);
+    }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.2rem;
+      font-size: 0.85rem;
+      color: #92400e;
+      margin-top: 1.5rem;
+    }
+    .disclaimer strong { color: #78350f; }
+
+    /* ── DIVIDER ── */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--ink-muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--purple-deep); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 3rem 1.2rem 2.5rem; }
+      main  { padding: 2.5rem 1.2rem; }
+      .pipeline::before { left: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Portfolio</a>
+    <span class="sep">›</span>
+    <span class="current">Google Maps Lead Scraper</span>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Python · Web Scraping · Data Extraction</span>
+      <h1>Google Maps<br /><em>Lead Scraper</em></h1>
+      <p>
+        An asynchronous web scraping tool that extracts structured business data
+        from Google Maps for any search query and location — and exports it to
+        clean, analysis-ready CSV and Excel files.
+      </p>
+      <div class="hero-meta">
+        <div class="meta-pill"><span class="dot"></span> Playwright &amp; asyncio</div>
+        <div class="meta-pill"><span class="dot"></span> Dynamic content handling</div>
+        <div class="meta-pill"><span class="dot"></span> CSV + Excel export</div>
+        <div class="meta-pill"><span class="dot"></span> Built for portfolio / education</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- OVERVIEW -->
+    <section>
+      <h2>Project Overview</h2>
+      <p>
+        This project demonstrates a complete, production-style web scraping pipeline built with
+        Python. Given a business type and location, the scraper navigates Google Maps, scrolls
+        through the results feed to collect listings, then clicks into each one to extract
+        detailed business information.
+      </p>
+      <p>
+        The resulting dataset is deduplicated by phone number and business name, then exported
+        to both <strong>CSV</strong> and a formatted <strong>Excel (.xlsx)</strong> file —
+        ready for CRM import, market research, or further analysis.
+      </p>
+
+      <!-- Usage terminal -->
+      <div class="terminal">
+        <div class="terminal-bar">
+          <span class="t-dot red"></span>
+          <span class="t-dot amber"></span>
+          <span class="t-dot green"></span>
+          <span class="terminal-label">bash</span>
+        </div>
+        <div class="terminal-body">
+          <div>
+            <span class="t-prompt">$</span>
+            <span class="t-cmd"> python gmaps_scraper.py </span>
+            <span class="t-flag">--query</span>
+            <span class="t-val"> "restaurants" </span>
+            <span class="t-flag">--location</span>
+            <span class="t-val"> "Lagos Nigeria" </span>
+            <span class="t-flag">--limit</span>
+            <span class="t-val"> 50</span>
+          </div>
+          <div>&nbsp;</div>
+          <div><span class="t-success">Searching:</span> <span class="t-cmd">restaurants in Lagos Nigeria</span></div>
+          <div><span class="t-out">⠋ Found 50 unique (scrolling for 50)...</span></div>
+          <div><span class="t-out">⠋ Extracting details...</span></div>
+          <div><span class="t-success">✔ Unique listings to extract: 50</span></div>
+          <div>&nbsp;</div>
+          <div><span class="t-warn">Results Summary — restaurants in Lagos Nigeria</span></div>
+          <div><span class="t-out">  Total leads            </span><span class="t-success">47</span></div>
+          <div><span class="t-out">  With phone numbers      </span><span class="t-success">47</span></div>
+          <div><span class="t-out">  With websites           </span><span class="t-success">31</span></div>
+          <div><span class="t-out">  Average rating          </span><span class="t-success">4.21</span></div>
+          <div><span class="t-out">  Duplicates removed      </span><span class="t-success">3</span></div>
+          <div><span class="t-out">  CSV saved to   </span><span class="t-val">leads_restaurants_lagos_nigeria_20250530.csv</span></div>
+          <div><span class="t-out">  Excel saved to </span><span class="t-val">leads_restaurants_lagos_nigeria_20250530.xlsx</span></div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <h2>How It Works</h2>
+      <p>The scraper follows a five-stage pipeline from search to clean export.</p>
+
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <strong>Navigate &amp; Search</strong>
+            <p>Launches a headless Chromium browser via Playwright with a realistic user agent and viewport. Navigates to a Google Maps search URL constructed from the query and location arguments.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <strong>Scroll &amp; Collect Listings</strong>
+            <p>Programmatically scrolls the results sidebar, counting unique listing URLs after each scroll. Stops when the requested limit is reached or no new results appear after five consecutive scrolls.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <strong>Extract Detail for Each Listing</strong>
+            <p>Clicks into each unique listing and extracts: business name, category, star rating, review count, address, phone number, and website URL — using precise CSS selectors and aria-label targeting.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <strong>Deduplicate &amp; Validate</strong>
+            <p>Filters out records without phone numbers, then deduplicates by phone and business name using pandas — ensuring every exported row is a unique, contactable business.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <strong>Export to CSV &amp; Excel</strong>
+            <p>Saves two timestamped output files: a flat CSV for programmatic use, and a formatted Excel file with auto-sized columns via openpyxl — both ready for CRM import or further analysis.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- KEY FEATURES -->
+    <section>
+      <h2>Key Features</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="icon">⚡</span>
+          <strong>Async Architecture</strong>
+          <p>Built with Python's asyncio and Playwright's async API for non-blocking browser control.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon">🌐</span>
+          <strong>Dynamic Content Handling</strong>
+          <p>Headless Chromium renders JavaScript-heavy pages that traditional HTTP scrapers cannot access.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon">🧹</span>
+          <strong>Built-in Deduplication</strong>
+          <p>Deduplicates by phone number then by name, so the exported dataset has no repeated businesses.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon">📊</span>
+          <strong>Dual Export</strong>
+          <p>Outputs to both CSV and a formatted .xlsx file with auto-sized columns — no post-processing needed.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon">🖥️</span>
+          <strong>Live Progress Display</strong>
+          <p>Real-time terminal feedback via the Rich library — spinner, progress count, and a results summary table.</p>
+        </div>
+        <div class="feature-card">
+          <span class="icon">🛡️</span>
+          <strong>Graceful Error Handling</strong>
+          <p>Per-listing try/except blocks mean a single failed extraction doesn't abort the entire run.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- TECH STACK -->
+    <section>
+      <h2>Tech Stack</h2>
+      <p>Every library was chosen to address a specific requirement in the pipeline:</p>
+
+      <h3>Browser Automation</h3>
+      <div class="tech-list">
+        <span class="tech-badge">Playwright</span>
+        <span class="tech-badge">asyncio</span>
+        <span class="tech-badge">Chromium (headless)</span>
+      </div>
+
+      <h3>Data Processing &amp; Export</h3>
+      <div class="tech-list">
+        <span class="tech-badge">pandas</span>
+        <span class="tech-badge">openpyxl</span>
+        <span class="tech-badge">re (regex)</span>
+      </div>
+
+      <h3>CLI &amp; Display</h3>
+      <div class="tech-list">
+        <span class="tech-badge">Rich</span>
+        <span class="tech-badge">argparse</span>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- SAMPLE OUTPUT -->
+    <section>
+      <h2>Sample Output</h2>
+      <p>Each row in the exported dataset represents a unique business with a verified phone number:</p>
+
+      <table class="output-table">
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>category</th>
+            <th>rating</th>
+            <th>reviews</th>
+            <th>phone</th>
+            <th>website</th>
+            <th>address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>The Yellow Chilli</td>
+            <td>Restaurant</td>
+            <td>4.5</td>
+            <td>312</td>
+            <td>+234 801 234 5678</td>
+            <td>yellowchilli.com</td>
+            <td>14 Admiralty Way, Lekki</td>
+          </tr>
+          <tr>
+            <td>Nkoyo Restaurant</td>
+            <td>Nigerian restaurant</td>
+            <td>4.7</td>
+            <td>528</td>
+            <td>+234 802 345 6789</td>
+            <td>nkoyorestaurant.com</td>
+            <td>11a Akin Adesola St, VI</td>
+          </tr>
+          <tr>
+            <td>Craft Grill</td>
+            <td>Grill restaurant</td>
+            <td>4.3</td>
+            <td>194</td>
+            <td>+234 803 456 7890</td>
+            <td>craftgrill.ng</td>
+            <td>23 Bode Thomas St, Surulere</td>
+          </tr>
+          <tr>
+            <td>Bogobiri House</td>
+            <td>African restaurant</td>
+            <td>4.6</td>
+            <td>441</td>
+            <td>+234 804 567 8901</td>
+            <td>bogobiri.com</td>
+            <td>9 Maitama Sule St, Ikoyi</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:0.78rem; color: var(--ink-muted); margin-top: 0.6rem;">
+        * Sample data shown for illustration. Business details are fictional.
+      </p>
+    </section>
+
+    <hr />
+
+    <!-- LINKS -->
+    <section>
+      <h2>View the Project</h2>
+      <div class="links-row">
+        <a class="btn btn-primary" href="https://github.com/adewaleolalekan/data_analytics_portfolio/blob/main/gmaps_scraper/gmaps_scraper.py" target="_blank" rel="noopener">
+          &#60;/&#62; &nbsp;View Source Code
+        </a>
+        <a class="btn btn-outline" href="https://adewaleolalekan.github.io/data_analytics_portfolio/" >
+          ← Back to Portfolio
+        </a>
+      </div>
+
+      <div class="disclaimer">
+        <strong>Note:</strong> This project was built for portfolio and educational purposes to demonstrate
+        async web scraping, dynamic content handling, and data pipeline design. Google Maps' Terms of Service
+        prohibit scraping for commercial use.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">Adewale Olalekan</a> – Data Analytics Portfolio
+  </footer>
+
+</body>
+</html>
