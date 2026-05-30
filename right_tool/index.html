@@ -1,130 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Study: Choosing the Right Tool for the Job</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text-orange {
-            background: linear-gradient(to right, #F97316, #EA580C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choosing the Right Tool – Adewale Olalekan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:  #4A00E0;
+      --purple-mid:   #7B2FFF;
+      --purple-light: #E2D9FF;
+      --purple-pale:  #F3EFFF;
+      --ink:          #1a1a2e;
+      --ink-soft:     #3d3d5c;
+      --ink-muted:    #7a7a9a;
+      --white:        #ffffff;
+      --border:       #e8e4f5;
+      --sql-bg:       #fff7ed;
+      --sql-border:   #fed7aa;
+      --sql-text:     #9a3412;
+      --sheet-bg:     #f0fdf4;
+      --sheet-border: #bbf7d0;
+      --sheet-text:   #166534;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); line-height: 1.7; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
+    nav a { text-decoration: none; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--purple-deep); }
+    nav .sep { color: var(--border); }
+    nav .current { color: var(--ink); }
+
+    .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a0a3d 50%, #0d1f3c 100%); color: var(--white); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(74,0,224,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(103,232,249,0.1) 0%, transparent 50%); }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+    .hero-tag { display: inline-block; background: rgba(123,47,255,0.3); border: 1px solid rgba(123,47,255,0.5); color: #c4b5fd; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: #c4b5fd; }
+    .hero p { font-size: 1.1rem; color: #a8a8cc; max-width: 600px; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .meta-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #a8a8cc; }
+    .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+    section { margin-bottom: 4rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 1.2rem; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--purple-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; margin-top: 0; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+    .scenario-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 1.8rem; }
+    .scenario-header { background: var(--purple-pale); padding: 1.2rem 1.6rem; display: flex; align-items: center; gap: 1rem; }
+    .scenario-num { width: 36px; height: 36px; border-radius: 50%; background: var(--purple-deep); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .scenario-header h3 { margin: 0; font-size: 1rem; color: var(--ink); text-transform: none; letter-spacing: 0; font-weight: 600; }
+    .scenario-body { padding: 1.4rem 1.6rem; }
+    .scenario-body p { font-size: 0.9rem; margin-bottom: 0.8rem; }
+    .verdict { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; border-radius: 8px; margin-top: 1rem; }
+    .verdict.sql { background: var(--sql-bg); border: 1px solid var(--sql-border); }
+    .verdict.spreadsheet { background: var(--sheet-bg); border: 1px solid var(--sheet-border); }
+    .verdict-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.7rem; border-radius: 6px; white-space: nowrap; flex-shrink: 0; margin-top: 0.1rem; }
+    .verdict.sql .verdict-badge { background: var(--sql-border); color: var(--sql-text); }
+    .verdict.spreadsheet .verdict-badge { background: var(--sheet-border); color: var(--sheet-text); }
+    .verdict p { font-size: 0.85rem; margin: 0; color: var(--ink-soft); }
+
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 1.5rem; }
+    @media (max-width: 580px) { .summary-grid { grid-template-columns: 1fr; } }
+    .summary-card { border-radius: 12px; padding: 1.4rem; }
+    .summary-card.sql { background: var(--sql-bg); border: 1px solid var(--sql-border); }
+    .summary-card.spreadsheet { background: var(--sheet-bg); border: 1px solid var(--sheet-border); }
+    .summary-card h3 { margin-top: 0; text-transform: none; letter-spacing: 0; font-size: 1rem; }
+    .summary-card.sql h3 { color: var(--sql-text); }
+    .summary-card.spreadsheet h3 { color: var(--sheet-text); }
+    .summary-card ul { padding-left: 1.2rem; font-size: 0.85rem; color: var(--ink-soft); }
+    .summary-card ul li { margin-bottom: 0.3rem; }
+
+    .tech-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .tech-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 6px; background: var(--purple-pale); border: 1px solid var(--border); color: var(--purple-deep); font-weight: 500; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+    .btn-outline { background: transparent; color: var(--purple-deep); border: 2px solid var(--purple-deep); }
+    .btn-outline:hover { background: var(--purple-pale); transform: translateY(-2px); }
+    .links-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 0 0 4rem; }
+    footer { text-align: center; padding: 2rem; color: var(--ink-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--purple-deep); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) { .hero { padding: 3rem 1.2rem 2.5rem; } main { padding: 2.5rem 1.2rem; } }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <nav>
+    <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Portfolio</a>
+    <span class="sep">›</span>
+    <span class="current">Choosing the Right Tool</span>
+  </nav>
 
-        <!-- Header Section -->
-        <header class="text-center py-12 md:py-16">
-            <h1 class="text-4xl md:text-6xl font-bold gradient-text-orange mb-4">Choosing the Right Tool for the Job</h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A case study on selecting the appropriate data analysis tool—Spreadsheets vs. SQL—based on real-world business scenarios.</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="space-y-8">
-
-            <!-- Scenario 1 -->
-            <div class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">1</span>
-                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Identifying Top 10 Pet Supply Products</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
-                        <p class="text-gray-700">A major online pet supplies business needs to identify the top 10 products with the highest sales in the last month. The data is spread across multiple tables in the company's database (one for product details, another for sales data).</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
-                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
-                            <p class="font-bold text-orange-800">Tool: SQL</p>
-                            <p class="text-orange-700">SQL is the ideal choice here. The data lives in a relational database, and the task requires joining data from multiple tables (products and sales). SQL is designed for exactly this kind of complex query, efficiently handling large datasets and complex relationships far better than a spreadsheet could.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scenario 2 -->
-            <div class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">2</span>
-                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Determining a New Store Location</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
-                        <p class="text-gray-700">A small fitness tech company needs to find which cities have a large customer population to decide on a new retail store location. The data is a single `.csv` file with 300 customer addresses. A simple visualization, like a bar chart, is also required.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
-                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
-                            <p class="font-bold text-orange-800">Tool: Spreadsheet</p>
-                            <p class="text-orange-700">A spreadsheet is the perfect tool for this task. The dataset is very small (300 rows) and comes in a simple `.csv` format. Spreadsheets make it easy to quickly sort, filter by city, count customers, and create a simple bar chart for comparison—all without the need for a database setup.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scenario 3 -->
-            <div class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">3</span>
-                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Analyzing Customer Satisfaction Surveys</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
-                        <p class="text-gray-700">A fashion retailer's marketing team has customer satisfaction survey results in a `.csv` file. They need to calculate the average satisfaction score and segment the responses by demographics (age, gender, location) to tailor marketing strategies.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
-                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
-                            <p class="font-bold text-orange-800">Tool: Spreadsheet</p>
-                            <p class="text-orange-700">While SQL could be used if the dataset were massive, a spreadsheet is more appropriate here. For a typical survey dataset provided as a `.csv`, a spreadsheet offers powerful and accessible tools like PivotTables to easily calculate average scores and segment data by various demographics without any complex setup.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Scenario 4 -->
-            <div class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="flex items-center mb-4">
-                    <span class="flex items-center justify-center h-12 w-12 rounded-full bg-orange-500 text-white font-bold text-xl mr-4">4</span>
-                    <h2 class="text-2xl font-bold text-gray-900">Scenario: Calculating Course Completion Rates</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">The Business Need</h3>
-                        <p class="text-gray-700">An online education platform needs to identify courses with the lowest completion rates. The data is stored in a relational database with separate tables for user registration, course enrollment, and course completion.</p>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-lg mb-2">Recommended Tool & Justification</h3>
-                        <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
-                            <p class="font-bold text-orange-800">Tool: SQL</p>
-                            <p class="text-orange-700">This is a classic use case for SQL. The data is in a relational database, and calculating completion rates requires joining information across multiple tables (enrollment vs. completion). SQL can perform these joins and aggregations efficiently across what is likely a very large dataset, making it the superior choice.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="text-center py-8 mt-8 border-t border-gray-200">
-            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
-        </footer>
-
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">SQL · Google Sheets · Excel · Tool Selection</span>
+      <h1>Choosing the<br /><em>Right Tool for the Job</em></h1>
+      <p>A case study on selecting the appropriate data analysis tool — Spreadsheets vs. SQL — based on real-world business scenarios.</p>
+      <div class="hero-meta">
+        <div class="meta-pill"><span class="dot"></span> 4 real-world scenarios</div>
+        <div class="meta-pill"><span class="dot"></span> SQL vs. Spreadsheet decisions</div>
+        <div class="meta-pill"><span class="dot"></span> Clear justifications for each</div>
+      </div>
     </div>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Overview</h2>
+      <p>One of the most important decisions a data analyst makes is choosing the right tool before starting any analysis. Using SQL on a 300-row CSV wastes time; using a spreadsheet on a multi-table relational database is impractical. This case study walks through four real business scenarios and explains the reasoning behind each tool choice.</p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Scenarios</h2>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-num">01</div>
+          <h3>Identifying Top 10 Pet Supply Products</h3>
+        </div>
+        <div class="scenario-body">
+          <p>A major online pet supplies business needs to identify the top 10 products with the highest sales in the last month. Data is spread across multiple tables in the company's database — one for product details, another for sales data.</p>
+          <div class="verdict sql">
+            <span class="verdict-badge">SQL</span>
+            <p>The data lives in a relational database and the task requires joining multiple tables. SQL is built for exactly this — it handles complex joins and aggregations across large datasets efficiently, far better than any spreadsheet could.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-num">02</div>
+          <h3>Determining a New Store Location</h3>
+        </div>
+        <div class="scenario-body">
+          <p>A small fitness tech company needs to identify which cities have the largest customer population to decide on a new retail location. The data is a single CSV file with 300 customer addresses. A simple bar chart is also required.</p>
+          <div class="verdict spreadsheet">
+            <span class="verdict-badge">Spreadsheet</span>
+            <p>The dataset is small (300 rows) and comes in a simple CSV. A spreadsheet makes it easy to sort, filter by city, count customers, and generate a bar chart — all without needing a database setup. SQL would be overkill here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-num">03</div>
+          <h3>Analysing Customer Satisfaction Surveys</h3>
+        </div>
+        <div class="scenario-body">
+          <p>A fashion retailer's marketing team has customer satisfaction survey results in a CSV file. They need to calculate average satisfaction scores and segment responses by demographics (age, gender, location) to tailor marketing strategies.</p>
+          <div class="verdict spreadsheet">
+            <span class="verdict-badge">Spreadsheet</span>
+            <p>For a typical survey CSV, a spreadsheet's PivotTables make it easy to calculate average scores and segment by demographics without complex setup. SQL could work if the dataset were massive, but is unnecessary here.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-header">
+          <div class="scenario-num">04</div>
+          <h3>Calculating Course Completion Rates</h3>
+        </div>
+        <div class="scenario-body">
+          <p>An online education platform needs to identify courses with the lowest completion rates. Data is stored in a relational database with separate tables for user registration, course enrollment, and course completion.</p>
+          <div class="verdict sql">
+            <span class="verdict-badge">SQL</span>
+            <p>A classic SQL use case. Calculating completion rates requires joining across three tables (registration, enrollment, completion). SQL handles these joins and aggregations efficiently at scale — a spreadsheet simply cannot match this.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Decision Framework Summary</h2>
+      <div class="summary-grid">
+        <div class="summary-card sql">
+          <h3>🗄️ Choose SQL when…</h3>
+          <ul>
+            <li>Data lives in a relational database</li>
+            <li>You need to join multiple tables</li>
+            <li>The dataset is very large</li>
+            <li>You need repeatable, automated queries</li>
+          </ul>
+        </div>
+        <div class="summary-card spreadsheet">
+          <h3>📊 Choose a Spreadsheet when…</h3>
+          <ul>
+            <li>Data comes as a simple CSV or flat file</li>
+            <li>The dataset is small (a few thousand rows or fewer)</li>
+            <li>You need quick charts or pivot tables</li>
+            <li>No database setup is available or needed</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 2rem;">Tools Used</h3>
+      <div class="tech-list">
+        <span class="tech-badge">SQL</span>
+        <span class="tech-badge">Google Sheets</span>
+        <span class="tech-badge">Microsoft Excel</span>
+        <span class="tech-badge">PivotTables</span>
+      </div>
+
+      <div class="links-row">
+        <a class="btn btn-outline" href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Back to Portfolio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">Adewale Olalekan</a> – Data Analytics Portfolio
+  </footer>
 
 </body>
 </html>

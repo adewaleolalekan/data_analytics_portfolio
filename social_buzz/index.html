@@ -1,272 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social Buzz - Data Analysis Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text {
-            background: linear-gradient(to right, #8E2DE2, #4A00E0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .code-block {
-            background-color: #1f2937;
-            color: #d1d5db;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            font-family: 'Courier New', Courier, monospace;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Social Buzz Content Analysis – Adewale Olalekan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:  #4A00E0;
+      --purple-mid:   #7B2FFF;
+      --purple-light: #E2D9FF;
+      --purple-pale:  #F3EFFF;
+      --ink:          #1a1a2e;
+      --ink-soft:     #3d3d5c;
+      --ink-muted:    #7a7a9a;
+      --white:        #ffffff;
+      --border:       #e8e4f5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); line-height: 1.7; }
+
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px;
+    }
+    nav a { text-decoration: none; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--purple-deep); }
+    nav .sep { color: var(--border); }
+    nav .current { color: var(--ink); }
+
+    .hero {
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a0a3d 50%, #0d1f3c 100%);
+      color: var(--white); padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(74,0,224,0.3) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(103,232,249,0.1) 0%, transparent 50%);
+    }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+    .hero-tag {
+      display: inline-block; background: rgba(123,47,255,0.3);
+      border: 1px solid rgba(123,47,255,0.5); color: #c4b5fd;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 999px;
+      margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace;
+    }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: #c4b5fd; }
+    .hero p { font-size: 1.1rem; color: #a8a8cc; max-width: 600px; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .meta-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #a8a8cc; }
+    .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+    section { margin-bottom: 4rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 1.2rem; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--purple-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; margin-top: 1.8rem; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+    ul { color: var(--ink-soft); padding-left: 1.4rem; margin-bottom: 1rem; }
+    ul li { margin-bottom: 0.4rem; }
+
+    .insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; margin-top: 1.5rem; }
+    .insight-card {
+      background: var(--purple-pale); border: 1px solid var(--border); border-radius: 12px;
+      padding: 1.4rem; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .insight-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(74,0,224,0.1); }
+    .insight-card .icon { font-size: 1.6rem; margin-bottom: 0.7rem; display: block; }
+    .insight-card strong { display: block; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.4rem; }
+    .insight-card p { font-size: 0.85rem; color: var(--ink-muted); margin: 0; line-height: 1.5; }
+
+    .pipeline { display: flex; flex-direction: column; gap: 0; margin-top: 1.5rem; position: relative; }
+    .pipeline::before { content: ''; position: absolute; left: 20px; top: 24px; bottom: 24px; width: 2px; background: linear-gradient(to bottom, var(--purple-deep), var(--purple-light)); }
+    .step { display: flex; gap: 1.2rem; padding: 1rem 0; position: relative; }
+    .step-num { width: 42px; height: 42px; border-radius: 50%; background: var(--purple-deep); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+    .step-content strong { display: block; color: var(--ink); margin-bottom: 0.2rem; }
+    .step-content p { font-size: 0.88rem; margin: 0; }
+
+    .scores-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 1.2rem; }
+    .scores-table th { background: var(--ink); color: var(--white); text-align: left; padding: 0.6rem 1rem; font-weight: 500; }
+    .scores-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); color: var(--ink-soft); }
+    .scores-table tr:nth-child(even) td { background: var(--purple-pale); }
+    .score-bar { height: 8px; border-radius: 4px; background: var(--purple-deep); display: inline-block; margin-left: 0.5rem; vertical-align: middle; opacity: 0.7; }
+
+    .tech-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .tech-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 6px; background: var(--purple-pale); border: 1px solid var(--border); color: var(--purple-deep); font-weight: 500; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+    .btn-primary { background: var(--purple-deep); color: var(--white); }
+    .btn-primary:hover { background: var(--purple-mid); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74,0,224,0.3); }
+    .btn-outline { background: transparent; color: var(--purple-deep); border: 2px solid var(--purple-deep); }
+    .btn-outline:hover { background: var(--purple-pale); transform: translateY(-2px); }
+    .links-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 0 0 4rem; }
+    footer { text-align: center; padding: 2rem; color: var(--ink-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--purple-deep); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) { .hero { padding: 3rem 1.2rem 2.5rem; } main { padding: 2.5rem 1.2rem; } }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <nav>
+    <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Portfolio</a>
+    <span class="sep">›</span>
+    <span class="current">Social Buzz Content Analysis</span>
+  </nav>
 
-        <!-- Header Section -->
-        <header class="text-center py-12 md:py-16">
-            <h1 class="text-4xl md:text-6xl font-bold gradient-text mb-4">Social Buzz Content Analysis</h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A data-driven deep dive into the top 5 most popular content categories to fuel growth and prepare for a successful IPO.</p>
-        </header>
-
-        <!-- Main Content Grid -->
-        <main class="space-y-12">
-
-            <!-- Client Overview Section -->
-            <section class="grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-2xl shadow-sm">
-                <div class="md:col-span-1">
-                    <img src="https://placehold.co/600x400/E2D9FF/4A00E0?text=Social+Buzz" alt="Social Buzz illustration" class="rounded-lg shadow-md w-full h-auto">
-                </div>
-                <div class="md:col-span-1">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Client Overview: Social Buzz</h2>
-                    <p class="text-gray-600 mb-4">
-                        Founded in 2010, <strong>Social Buzz</strong> is a fast-growing social media platform with over 500 million monthly active users. Their unique model prioritizes content performance over influencer presence, allowing users to remain anonymous. With a massive daily volume of unstructured data, the company needed expert advisory to scale its data infrastructure and prepare for an IPO.
-                    </p>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Project Objective</h3>
-                    <p class="text-gray-600">
-                        Our primary goal for this initial 3-month engagement was to analyze platform content to identify high-performing categories, providing actionable insights to guide their content strategy.
-                    </p>
-                </div>
-            </section>
-            
-            <!-- Data & Methodology Section -->
-            <section class="bg-white p-8 rounded-2xl shadow-sm">
-                <h2 class="text-3xl font-bold text-center mb-8">Data & Methodology</h2>
-                <div class="space-y-8">
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">1. Identifying Relevant Data</h3>
-                        <p class="text-gray-600">The client brief required an analysis of content categories to find the "top 5 categories with the largest popularity". The data model showed that popularity is quantified by a `Score` associated with each reaction type. Therefore, to fulfill the brief, we needed to link content categories to their reaction scores. This led us to identify three key datasets as essential for the analysis: <strong>Content</strong>, <strong>Reactions</strong>, and <strong>ReactionTypes</strong>.</p>
-                    </div>
-
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">2. The Data Cleaning Process</h3>
-                        <p class="text-gray-600 mb-4">Before analysis, it was crucial to ensure the data was clean and accurate. I performed the following steps:</p>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <h4 class="font-semibold text-lg mb-2">Content Dataset:</h4>
-                                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                    <li><strong>Removed Irrelevant Columns:</strong> The `URL` and `User ID` columns were removed as they were not needed for category-level popularity analysis.</li>
-                                    <li><strong>Standardized Categories:</strong> The `Category` column contained duplicates due to inconsistent formatting (e.g., "animals" vs. `"animals"`). I removed the quotation marks using Find and Replace to standardize the values.</li>
-                                    <li><strong>Renamed Column:</strong> The `Type` column was renamed to `Content Type` for better clarity.</li>
-                                </ul>
-                            </div>
-                            <div class="bg-gray-100 p-4 rounded-lg">
-                                <h4 class="font-semibold text-lg mb-2">Reactions Dataset:</h4>
-                                <ul class="list-disc list-inside space-y-2 text-gray-700">
-                                     <li><strong>Removed Irrelevant Columns:</strong> The `User ID` column was also removed from this dataset.</li>
-                                    <li><strong>Handled Missing Values:</strong> Rows with blank values were filtered and deleted to maintain data integrity.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">3. Merging for the Final Dataset</h3>
-                        <p class="text-gray-600">With the individual datasets cleaned, the next step was to create a unified table for analysis. Using the <strong>Reactions</strong> dataset as the base, I used the `VLOOKUP` function to join the relevant data:</p>
-                        <ul class="list-decimal list-inside space-y-2 text-gray-700 mt-4">
-                            <li>Joined `Content Type` and `Category` from the <strong>Content</strong> dataset using `Content ID` as the unique key.</li>
-                            <li>Joined `Sentiment` and `Score` from the <strong>ReactionTypes</strong> dataset using `Type` (the reaction type) as the unique key.</li>
-                        </ul>
-                        <p class="text-gray-600 mt-2">The final merged data contained all the necessary columns for analysis: Content ID, Content Type, Category, Reaction Type, Sentiment, and Score.</p>
-                    </div>
-
-                    <div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">4. The Analysis: Calculating Popularity</h3>
-                        <p class="text-gray-600">The final step was to calculate the total popularity score for each content category. To do this, I first extracted a distinct list of all categories. Then, using the `SUMIF` function, I aggregated the total `Score` for each unique category. This provided a clear, quantitative measure of popularity, which I then used to identify the top 5 performing categories.</p>
-                    </div>
-                </div>
-            </section>
-
-
-            <!-- Insights & Charts Section -->
-            <section>
-                <h2 class="text-3xl font-bold text-center mb-8">Key Insights & Visualizations</h2>
-                <div class="grid lg:grid-cols-2 gap-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="text-xl font-bold text-center mb-4">Top 5 Performing Categories</h3>
-                        <canvas id="barChart"></canvas>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <h3 class="text-xl font-bold text-center mb-4">Engagement Share</h3>
-                        <div class="max-w-sm mx-auto">
-                            <canvas id="pieChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-8 bg-white p-8 rounded-2xl shadow-sm">
-                    <h3 class="text-2xl font-bold mb-4">Actionable Insights</h3>
-                    <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-green-100 text-green-800 flex items-center justify-center mr-3 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-lg">Animal Content Reigns Supreme</h4>
-                                <p class="text-gray-600">With the highest engagement score, animal-related content is a powerful driver of user interaction. Expanding this category offers a significant opportunity for growth.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 h-6 w-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center mr-3 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-lg">Science & Healthy Eating Are Rising Stars</h4>
-                                <p class="text-gray-600">Educational and health-focused content is rapidly gaining traction. Developing more content in these areas will likely boost engagement and attract new users.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                             <div class="flex-shrink-0 h-6 w-6 rounded-full bg-yellow-100 text-yellow-800 flex items-center justify-center mr-3 mt-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-lg">Technology & Food Content are Stable Performers</h4>
-                                <p class="text-gray-600">These categories show consistent engagement. Innovating with new formats, like tech trend analysis or interactive recipe challenges, could drive even more activity.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Summary & Recommendations Section -->
-            <section class="grid md:grid-cols-5 gap-8 items-center bg-gray-800 text-white p-8 rounded-2xl shadow-lg">
-                 <div class="md:col-span-2">
-                    <img src="https://placehold.co/600x400/374151/FFFFFF?text=Strategy" alt="People shaking hands at a meeting" class="rounded-lg shadow-md w-full h-auto">
-                </div>
-                <div class="md:col-span-3">
-                    <h2 class="text-3xl font-bold mb-4">Summary & Recommendations</h2>
-                    <p class="text-gray-300 mb-4">
-                        The data clearly shows that a diversified content strategy is key. By capitalizing on leading categories, investing in rising stars, and innovating on stable performers, Social Buzz can significantly enhance user engagement and position itself for a strong IPO.
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="Social_Buzz.pdf" class="bg-white text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition duration-300">Download Full Report</a>
-                        <!-- <a href="#" class="bg-violet-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-violet-600 transition duration-300">Contact Us</a> -->
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="text-center py-8 mt-8 border-t border-gray-200">
-            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
-        </footer>
-
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Google Sheets · Excel · Data Analysis</span>
+      <h1>Social Buzz<br /><em>Content Analysis</em></h1>
+      <p>A data-driven deep dive into the top 5 most popular content categories to fuel growth and prepare for a successful IPO.</p>
+      <div class="hero-meta">
+        <div class="meta-pill"><span class="dot"></span> 100,000+ posts analysed</div>
+        <div class="meta-pill"><span class="dot"></span> 5 top categories identified</div>
+        <div class="meta-pill"><span class="dot"></span> IPO readiness advisory</div>
+      </div>
     </div>
+  </header>
 
-    <script>
-        // Data from the presentation
-        const categories = ['Animals', 'Science', 'Healthy Eating', 'Technology', 'Food'];
-        const performanceScores = [74965, 71168, 69339, 68738, 66676];
-        const percentages = [21.4, 20.3, 19.8, 19.6, 19.0];
-        const backgroundColors = [
-            'rgba(139, 92, 246, 0.7)',
-            'rgba(99, 102, 241, 0.7)',
-            'rgba(59, 130, 246, 0.7)',
-            'rgba(34, 211, 238, 0.7)',
-            'rgba(52, 211, 153, 0.7)'
-        ];
-        const borderColors = [
-            'rgba(139, 92, 246, 1)',
-            'rgba(99, 102, 241, 1)',
-            'rgba(59, 130, 246, 1)',
-            'rgba(34, 211, 238, 1)',
-            'rgba(52, 211, 153, 1)'
-        ];
+  <main>
 
-        // Bar Chart
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        const barChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: 'Performance Score',
-                    data: performanceScores,
-                    backgroundColor: backgroundColors,
-                    borderColor: borderColors,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#e5e7eb'
-                        }
-                    },
-                    x: {
-                         grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
+    <section>
+      <h2>Client Overview</h2>
+      <p>Founded in 2010, <strong>Social Buzz</strong> is a fast-growing social media platform with over 500 million monthly active users. Their unique model prioritizes content performance over influencer presence, allowing users to remain anonymous. With a massive daily volume of unstructured data, the company needed expert advisory to scale its data infrastructure and prepare for an IPO.</p>
+      <h3>Project Objective</h3>
+      <p>Analyze platform content across 3 months to identify the top 5 most engaging content categories, providing actionable insights to guide Social Buzz's content strategy ahead of its IPO.</p>
+    </section>
 
-        // Pie Chart
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(pieCtx, {
-            type: 'pie',
-            data: {
-                labels: categories,
-                datasets: [{
-                    label: 'Engagement Share',
-                    data: percentages,
-                    backgroundColor: backgroundColors,
-                    borderColor: '#ffffff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    </script>
+    <hr />
+
+    <section>
+      <h2>Data & Methodology</h2>
+      <h3>Datasets Used</h3>
+      <p>Three key datasets were identified as essential: <strong>Content</strong>, <strong>Reactions</strong>, and <strong>ReactionTypes</strong>. Popularity is quantified by a Score associated with each reaction type, so linking categories to reaction scores was the core analytical task.</p>
+
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <strong>Cleaning the Content Dataset</strong>
+            <p>Removed irrelevant URL and User ID columns. Standardised the Category column by stripping inconsistent quotation marks (e.g. "animals" vs animals) using Find & Replace. Renamed the Type column to Content Type for clarity.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <strong>Cleaning the Reactions Dataset</strong>
+            <p>Removed the User ID column and deleted rows with blank values to maintain data integrity before merging.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <strong>Merging into a Final Dataset</strong>
+            <p>Used the Reactions dataset as the base. Applied VLOOKUP to join Content Type and Category from the Content dataset (keyed on Content ID), then joined Sentiment and Score from ReactionTypes (keyed on reaction type).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <strong>Calculating Popularity Scores</strong>
+            <p>Extracted a distinct list of all categories, then used SUMIF to aggregate the total Score per category — producing a clear, quantitative measure of popularity for ranking.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Top 5 Categories by Engagement Score</h2>
+      <table class="scores-table">
+        <thead>
+          <tr><th>Rank</th><th>Category</th><th>Total Score</th><th>Relative Engagement</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>🐾 Animals</td><td>74,965</td><td><span class="score-bar" style="width:120px"></span></td></tr>
+          <tr><td>2</td><td>🧪 Science</td><td>71,168</td><td><span class="score-bar" style="width:114px"></span></td></tr>
+          <tr><td>3</td><td>🥗 Healthy Eating</td><td>69,339</td><td><span class="score-bar" style="width:111px"></span></td></tr>
+          <tr><td>4</td><td>💻 Technology</td><td>68,738</td><td><span class="score-bar" style="width:110px"></span></td></tr>
+          <tr><td>5</td><td>🍽 Food</td><td>66,676</td><td><span class="score-bar" style="width:107px"></span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Key Insights</h2>
+      <div class="insight-grid">
+        <div class="insight-card">
+          <span class="icon">🐾</span>
+          <strong>Animal Content Reigns Supreme</strong>
+          <p>With the highest engagement score, animal-related content is a powerful driver of user interaction. Expanding this category offers a significant growth opportunity.</p>
+        </div>
+        <div class="insight-card">
+          <span class="icon">🚀</span>
+          <strong>Science & Healthy Eating Are Rising Stars</strong>
+          <p>Educational and health-focused content is rapidly gaining traction — developing more content here will likely boost engagement and attract new users.</p>
+        </div>
+        <div class="insight-card">
+          <span class="icon">📊</span>
+          <strong>Technology & Food Are Stable Performers</strong>
+          <p>These categories show consistent engagement. Innovating with new formats — tech trend analysis or interactive recipe challenges — could drive even more activity.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Summary & Recommendations</h2>
+      <p>The data clearly shows that a diversified content strategy is key. By capitalizing on leading categories, investing in rising stars, and innovating on stable performers, Social Buzz can significantly enhance user engagement and position itself for a strong IPO.</p>
+
+      <h3>Tools Used</h3>
+      <div class="tech-list">
+        <span class="tech-badge">Google Sheets</span>
+        <span class="tech-badge">Microsoft Excel</span>
+        <span class="tech-badge">VLOOKUP</span>
+        <span class="tech-badge">SUMIF</span>
+        <span class="tech-badge">Google Slides</span>
+      </div>
+
+      <div class="links-row">
+        <a class="btn btn-primary" href="Social_Buzz.pdf" target="_blank" rel="noopener">📄 Download Full Report</a>
+        <a class="btn btn-outline" href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Back to Portfolio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">Adewale Olalekan</a> – Data Analytics Portfolio
+  </footer>
 
 </body>
 </html>

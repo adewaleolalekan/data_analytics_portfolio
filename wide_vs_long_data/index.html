@@ -1,155 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Understanding Data Formats: Wide vs. Long</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text-blue {
-            background: linear-gradient(to right, #007CF0, #00DFD8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wide vs. Long Data – Adewale Olalekan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:  #4A00E0;
+      --purple-mid:   #7B2FFF;
+      --purple-light: #E2D9FF;
+      --purple-pale:  #F3EFFF;
+      --ink:          #1a1a2e;
+      --ink-soft:     #3d3d5c;
+      --ink-muted:    #7a7a9a;
+      --white:        #ffffff;
+      --border:       #e8e4f5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); line-height: 1.7; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
+    nav a { text-decoration: none; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--purple-deep); }
+    nav .sep { color: var(--border); }
+    nav .current { color: var(--ink); }
+
+    .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a0a3d 50%, #0d1f3c 100%); color: var(--white); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(74,0,224,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(103,232,249,0.1) 0%, transparent 50%); }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+    .hero-tag { display: inline-block; background: rgba(123,47,255,0.3); border: 1px solid rgba(123,47,255,0.5); color: #c4b5fd; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: #c4b5fd; }
+    .hero p { font-size: 1.1rem; color: #a8a8cc; max-width: 600px; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .meta-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #a8a8cc; }
+    .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+    section { margin-bottom: 4rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 1.2rem; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--purple-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; margin-top: 1.8rem; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-card { background: var(--purple-pale); border: 1px solid var(--border); border-radius: 12px; padding: 1.6rem; }
+    .compare-card .card-label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple-deep); margin-bottom: 0.6rem; }
+    .compare-card h3 { font-size: 1.15rem; color: var(--ink); margin-top: 0; margin-bottom: 0.5rem; text-transform: none; letter-spacing: 0; }
+    .compare-card p { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 0.8rem; }
+    .compare-card .best-for { font-size: 0.8rem; background: rgba(74,0,224,0.08); border-left: 3px solid var(--purple-deep); padding: 0.5rem 0.8rem; border-radius: 0 6px 6px 0; color: var(--ink-soft); }
+    .compare-card .best-for strong { color: var(--purple-deep); }
+
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin: 1rem 0 1.5rem; font-family: 'JetBrains Mono', monospace; }
+    .data-table th { background: var(--ink); color: var(--white); text-align: left; padding: 0.5rem 0.9rem; font-weight: 500; }
+    .data-table td { padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--border); color: var(--ink-soft); }
+    .data-table tr:nth-child(even) td { background: var(--purple-pale); }
+
+    .callout { background: var(--purple-pale); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem 1.6rem; margin: 1.5rem 0; }
+    .callout strong { color: var(--purple-deep); }
+
+    .tech-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .tech-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 6px; background: var(--purple-pale); border: 1px solid var(--border); color: var(--purple-deep); font-weight: 500; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+    .btn-outline { background: transparent; color: var(--purple-deep); border: 2px solid var(--purple-deep); }
+    .btn-outline:hover { background: var(--purple-pale); transform: translateY(-2px); }
+    .links-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 0 0 4rem; }
+    footer { text-align: center; padding: 2rem; color: var(--ink-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--purple-deep); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) { .hero { padding: 3rem 1.2rem 2.5rem; } main { padding: 2.5rem 1.2rem; } }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <nav>
+    <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Portfolio</a>
+    <span class="sep">›</span>
+    <span class="current">Wide vs. Long Data</span>
+  </nav>
 
-        <!-- Header Section -->
-        <header class="text-center py-12 md:py-16">
-            <h1 class="text-4xl md:text-6xl font-bold gradient-text-blue mb-4">Understanding Data Formats</h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">A practical guide to Wide and Long data structures and how they answer different analytical questions.</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="space-y-12">
-
-            <!-- Introduction -->
-            <section class="text-center max-w-4xl mx-auto">
-                <p class="text-lg text-gray-700">The way data is structured is fundamental to data analysis. The format of your data can either simplify your work or make it significantly more complex. Two of the most common structures are <strong>wide</strong> and <strong>long</strong> formats. Understanding the difference and knowing when to use each is a critical skill for any data analyst.</p>
-            </section>
-
-            <!-- Wide Data Section -->
-            <section class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Wide Data Format</h2>
-                        <p class="text-gray-700 mb-4">In a wide format, each subject or entity (like a country or a user) has its own single row. Each observation or attribute for that subject is then stored in a separate column.</p>
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
-                            <p class="font-semibold text-blue-800">Best for:</p>
-                            <p class="text-blue-700">Comparing specific attributes across different subjects at a single point in time.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-center mb-2 text-gray-700">Example: Population Data (Wide)</h3>
-                        <table class="w-full text-sm text-left text-gray-500 rounded-lg overflow-hidden shadow-sm">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">Country</th>
-                                    <th scope="col" class="px-6 py-3">Population 2010</th>
-                                    <th scope="col" class="px-6 py-3">Population 2011</th>
-                                    <th scope="col" class="px-6 py-3">Population 2012</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b">
-                                    <td class="px-6 py-4 font-medium">Argentina</td>
-                                    <td class="px-6 py-4">40.8M</td>
-                                    <td class="px-6 py-4">41.2M</td>
-                                    <td class="px-6 py-4">41.7M</td>
-                                </tr>
-                                <tr class="bg-gray-50 border-b">
-                                    <td class="px-6 py-4 font-medium">Brazil</td>
-                                    <td class="px-6 py-4">196.2M</td>
-                                    <td class="px-6 py-4">198.1M</td>
-                                    <td class="px-6 py-4">200.0M</td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <td class="px-6 py-4 font-medium">British Virgin Islands</td>
-                                    <td class="px-6 py-4">27.5k</td>
-                                    <td class="px-6 py-4">28.1k</td>
-                                    <td class="px-6 py-4">28.6k</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <h4 class="font-bold text-lg mb-2">Practical Example:</h4>
-                    <p class="text-gray-700">With the data in this wide format, answering a question like <strong class="text-blue-600">"Which country had the highest population in 2010?"</strong> is straightforward. You simply need to sort the "Population 2010" column in descending order.</p>
-                </div>
-            </section>
-
-            <!-- Long Data Section -->
-            <section class="bg-white p-8 rounded-2xl shadow-md">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900 mb-4">Long Data Format</h2>
-                        <p class="text-gray-700 mb-4">In a long format, each row represents a single observation for a subject. This means each subject will have its data spread across multiple rows. One column contains the value of the observation, and another column identifies what that observation represents (e.g., the year).</p>
-                        <div class="bg-teal-50 border-l-4 border-teal-500 p-4 rounded-r-lg">
-                            <p class="font-semibold text-teal-800">Best for:</p>
-                            <p class="text-teal-700">Analyzing trends over time for a single subject or for graphing time-series data.</p>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-semibold text-center mb-2 text-gray-700">Example: Population Data (Long)</h3>
-                        <table class="w-full text-sm text-left text-gray-500 rounded-lg overflow-hidden shadow-sm">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">Country</th>
-                                    <th scope="col" class="px-6 py-3">Year</th>
-                                    <th scope="col" class="px-6 py-3">Population</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b">
-                                    <td class="px-6 py-4 font-medium">Argentina</td>
-                                    <td class="px-6 py-4">2010</td>
-                                    <td class="px-6 py-4">40.8M</td>
-                                </tr>
-                                <tr class="bg-gray-50 border-b">
-                                    <td class="px-6 py-4 font-medium">Argentina</td>
-                                    <td class="px-6 py-4">2011</td>
-                                    <td class="px-6 py-4">41.2M</td>
-                                </tr>
-                                <tr class="bg-white border-b">
-                                    <td class="px-6 py-4 font-medium">Argentina</td>
-                                    <td class="px-6 py-4">2012</td>
-                                    <td class="px-6 py-4">41.7M</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                 <div class="mt-6">
-                    <h4 class="font-bold text-lg mb-2">Practical Example:</h4>
-                    <p class="text-gray-700">With the long format, it's easy to answer questions like <strong class="text-teal-600">"How did the population of Argentina change over time?"</strong> You can simply filter for "Argentina" and then plot the "Population" column against the "Year" column.</p>
-                </div>
-            </section>
-            
-            <!-- Summary Section -->
-            <section class="text-center max-w-4xl mx-auto">
-                 <h2 class="text-3xl font-bold text-center mb-4">When to Use Which?</h2>
-                <p class="text-lg text-gray-700">Choosing the right format depends entirely on the question you're trying to answer. Many data analysis tools can easily pivot or unpivot data, transforming it from wide to long and back again. The key is to recognize which structure is most efficient for your specific task.</p>
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="text-center py-8 mt-8 border-t border-gray-200">
-            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
-        </footer>
-
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Google Sheets · Excel · Data Concepts</span>
+      <h1>Understanding<br /><em>Data Formats</em></h1>
+      <p>A practical guide to Wide and Long data structures — and how they answer different analytical questions.</p>
+      <div class="hero-meta">
+        <div class="meta-pill"><span class="dot"></span> Wide format explained</div>
+        <div class="meta-pill"><span class="dot"></span> Long format explained</div>
+        <div class="meta-pill"><span class="dot"></span> When to use each</div>
+      </div>
     </div>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Why Data Format Matters</h2>
+      <p>The way data is structured is fundamental to analysis. The format of your data can either simplify your work or make it significantly more complex. Two of the most common structures are <strong>wide</strong> and <strong>long</strong> formats. Understanding the difference — and knowing when to use each — is a critical skill for any data analyst.</p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Comparing the Two Formats</h2>
+      <div class="compare-grid">
+        <div class="compare-card">
+          <div class="card-label">Format 01</div>
+          <h3>Wide Data</h3>
+          <p>Each subject or entity has a single row. Each observation or attribute for that subject is stored in a separate column.</p>
+          <div class="best-for"><strong>Best for:</strong> Comparing specific attributes across different subjects at a single point in time.</div>
+        </div>
+        <div class="compare-card">
+          <div class="card-label">Format 02</div>
+          <h3>Long Data</h3>
+          <p>Each row represents a single observation for a subject — so each subject's data is spread across multiple rows.</p>
+          <div class="best-for"><strong>Best for:</strong> Analyzing trends over time or graphing time-series data for one or more subjects.</div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Wide Format — Example</h2>
+      <p>Each country occupies one row, with separate columns for each year's population. This makes it easy to compare countries side-by-side at a specific point in time.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Country</th><th>Population 2010</th><th>Population 2011</th><th>Population 2012</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Argentina</td><td>40.8M</td><td>41.2M</td><td>41.7M</td></tr>
+          <tr><td>Brazil</td><td>196.2M</td><td>198.1M</td><td>200.0M</td></tr>
+          <tr><td>British Virgin Islands</td><td>27.5k</td><td>28.1k</td><td>28.6k</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Practical example:</strong> "Which country had the highest population in 2010?" — simply sort the Population 2010 column in descending order. Done.
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Long Format — Example</h2>
+      <p>The same data restructured so that each row is one observation (one country, one year). One column holds the value; another identifies what it represents.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Country</th><th>Year</th><th>Population</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Argentina</td><td>2010</td><td>40.8M</td></tr>
+          <tr><td>Argentina</td><td>2011</td><td>41.2M</td></tr>
+          <tr><td>Argentina</td><td>2012</td><td>41.7M</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <strong>Practical example:</strong> "How did Argentina's population change over time?" — filter for Argentina, then plot Population against Year. The long format makes this trivial.
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>When to Use Which?</h2>
+      <p>Choosing the right format depends entirely on the question you are trying to answer. Most analysis tools can pivot or unpivot data easily, transforming it from wide to long and back again. The key skill is recognising which structure is most efficient for your specific task before you begin.</p>
+
+      <h3>Tools Used</h3>
+      <div class="tech-list">
+        <span class="tech-badge">Google Sheets</span>
+        <span class="tech-badge">Microsoft Excel</span>
+        <span class="tech-badge">Pivot / Unpivot</span>
+      </div>
+
+      <div class="links-row">
+        <a class="btn btn-outline" href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Back to Portfolio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">Adewale Olalekan</a> – Data Analytics Portfolio
+  </footer>
 
 </body>
 </html>

@@ -1,108 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Study: Cleaning Student Performance Data</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .gradient-text-green {
-            background: linear-gradient(to right, #16A34A, #059669);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Cleaning Case Study – Adewale Olalekan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple-deep:  #4A00E0;
+      --purple-mid:   #7B2FFF;
+      --purple-light: #E2D9FF;
+      --purple-pale:  #F3EFFF;
+      --ink:          #1a1a2e;
+      --ink-soft:     #3d3d5c;
+      --ink-muted:    #7a7a9a;
+      --white:        #ffffff;
+      --border:       #e8e4f5;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); line-height: 1.7; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 1rem; height: 56px; }
+    nav a { text-decoration: none; color: var(--ink-muted); font-size: 0.85rem; font-weight: 500; transition: color 0.2s; }
+    nav a:hover { color: var(--purple-deep); }
+    nav .sep { color: var(--border); }
+    nav .current { color: var(--ink); }
+
+    .hero { background: linear-gradient(135deg, #0f0f1a 0%, #1a0a3d 50%, #0d1f3c 100%); color: var(--white); padding: 5rem 2rem 4rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 20% 50%, rgba(74,0,224,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(103,232,249,0.1) 0%, transparent 50%); }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+    .hero-tag { display: inline-block; background: rgba(123,47,255,0.3); border: 1px solid rgba(123,47,255,0.5); color: #c4b5fd; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.85rem; border-radius: 999px; margin-bottom: 1.5rem; font-family: 'JetBrains Mono', monospace; }
+    .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.15; margin-bottom: 1.2rem; }
+    .hero h1 em { font-style: italic; color: #c4b5fd; }
+    .hero p { font-size: 1.1rem; color: #a8a8cc; max-width: 600px; margin-bottom: 2.5rem; font-weight: 300; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+    .meta-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: #a8a8cc; }
+    .meta-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; flex-shrink: 0; }
+
+    main { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+    section { margin-bottom: 4rem; }
+    h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--ink); margin-bottom: 1.2rem; }
+    h3 { font-size: 1rem; font-weight: 600; color: var(--purple-deep); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.6rem; margin-top: 1.8rem; }
+    p { color: var(--ink-soft); margin-bottom: 1rem; }
+
+    .pipeline { display: flex; flex-direction: column; gap: 0; margin-top: 1.5rem; position: relative; }
+    .pipeline::before { content: ''; position: absolute; left: 20px; top: 24px; bottom: 24px; width: 2px; background: linear-gradient(to bottom, var(--purple-deep), var(--purple-light)); }
+    .step { display: flex; gap: 1.2rem; padding: 1rem 0; position: relative; }
+    .step-num { width: 42px; height: 42px; border-radius: 50%; background: var(--purple-deep); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; }
+    .step-content { padding-top: 0.5rem; }
+    .step-content strong { display: block; color: var(--ink); margin-bottom: 0.4rem; font-size: 1rem; }
+    .step-content p { font-size: 0.88rem; margin: 0 0 0.4rem; }
+    .step-content ul { color: var(--ink-soft); font-size: 0.88rem; padding-left: 1.2rem; margin: 0; }
+    .step-content ul li { margin-bottom: 0.3rem; }
+
+    .callout { background: var(--purple-pale); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem 1.6rem; margin: 1.5rem 0; }
+    .callout strong { color: var(--purple-deep); }
+
+    .tech-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .tech-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 6px; background: var(--purple-pale); border: 1px solid var(--border); color: var(--purple-deep); font-weight: 500; }
+
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.4rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: all 0.2s; }
+    .btn-outline { background: transparent; color: var(--purple-deep); border: 2px solid var(--purple-deep); }
+    .btn-outline:hover { background: var(--purple-pale); transform: translateY(-2px); }
+    .links-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+
+    hr { border: none; border-top: 1px solid var(--border); margin: 0 0 4rem; }
+    footer { text-align: center; padding: 2rem; color: var(--ink-muted); font-size: 0.82rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--purple-deep); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) { .hero { padding: 3rem 1.2rem 2.5rem; } main { padding: 2.5rem 1.2rem; } }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+  <nav>
+    <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Portfolio</a>
+    <span class="sep">›</span>
+    <span class="current">Data Cleaning Case Study</span>
+  </nav>
 
-        <!-- Header Section -->
-        <header class="text-center py-12 md:py-16">
-            <h1 class="text-4xl md:text-6xl font-bold gradient-text-green mb-4">Data Cleaning Case Study</h1>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">Preparing a student performance dataset for analysis using sorting and filtering techniques in spreadsheets.</p>
-        </header>
-
-        <!-- Main Content -->
-        <main class="space-y-12">
-
-            <!-- Project Overview Section -->
-            <section class="grid md:grid-cols-5 gap-8 items-center bg-white p-8 rounded-2xl shadow-md">
-                <div class="md:col-span-3">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Project Scenario</h2>
-                    <p class="text-gray-700 mb-4">
-                        As a data analyst for a large public school district in Portugal, I was tasked with preparing a dataset for an upcoming analysis. The superintendent wanted to understand the factors affecting student grades in two high schools: Gabriel Pereira (GP) and Mouzinho da Silveira (MS).
-                    </p>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">The Challenge</h3>
-                    <p class="text-gray-700">
-                        The raw dataset, collected from academic reports and student surveys, contained student grades, background information, and study habits. However, before any analysis could be performed, it was critical to clean the data. An analysis based on "dirty" data—data with incorrect, missing, or faulty values—could lead to flawed conclusions and ineffective policy changes.
-                    </p>
-                </div>
-                <div class="md:col-span-2">
-                    <img src="https://placehold.co/600x400/D1FAE5/059669?text=Student+Data" alt="Illustration of data charts" class="rounded-lg shadow-md w-full h-auto">
-                </div>
-            </section>
-
-            <!-- Data Cleaning Process Section -->
-            <section class="bg-white p-8 rounded-2xl shadow-md">
-                <h2 class="text-3xl font-bold text-center mb-10">My Data Cleaning Process</h2>
-                <div class="relative max-w-2xl mx-auto">
-                    <!-- Vertical Line -->
-                    <div class="absolute left-6 top-0 h-full w-0.5 bg-gray-200" aria-hidden="true"></div>
-
-                    <!-- Step 1 -->
-                    <div class="relative pl-12 pb-12">
-                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">1</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Initial Exploration with Sorting</h3>
-                        <p class="text-gray-700">My first step was to get a feel for the data. I performed a multi-level sort on the entire dataset: first by `school` (A-Z), and then by `age` (Z-A). This immediately organized the data and revealed a potential issue: the age range for students in both high schools appeared to be 15-22. Since the dataset was for high school students, ages over 19 were highly suspicious and likely data entry errors.</p>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="relative pl-12 pb-12">
-                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">2</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Removing Invalid Data with Filtering</h3>
-                        <p class="text-gray-700">After confirming with the superintendent that the valid age range was 15-19, I needed to remove the incorrect entries. I applied a filter to the `age` column and selected only the invalid ages (20, 21, and 22). This isolated the nine rows containing incorrect data, which I then deleted from the spreadsheet, ensuring the age data was now accurate.</p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="relative pl-12 pb-12">
-                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">3</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Handling Missing Data</h3>
-                        <p class="text-gray-700">The `reason` column, which explained why a student chose their school, was important for the analysis but contained several blank cells. To handle this, I filtered the `reason` column to show only the blanks. Since I couldn't know the actual reason for each student, I filled these missing values with a consistent placeholder, `none_given`, using the fill handle feature to apply the change to all blank cells efficiently.</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="relative pl-12">
-                        <div class="absolute left-0 top-0 h-12 w-12 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">4</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Transforming Data for Analysis</h3>
-                        <p class="text-gray-700">The final cleaning task involved the `Medu` (mother's education) and `Fedu` (father's education) columns. The data was in text format (e.g., "higher education"), which isn't suitable for many statistical calculations. To prepare for analysis, I converted this text data into numerical codes (e.g., "higher education" became `4`). I used the "Find and Replace" function to systematically replace each education level with its corresponding numeric code across both columns.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- Outcome Section -->
-            <section class="bg-green-700 text-white p-8 rounded-2xl shadow-lg text-center">
-                 <h2 class="text-3xl font-bold mb-4">Project Outcome</h2>
-                <p class="text-lg max-w-3xl mx-auto">
-                    Through this methodical process of sorting, filtering, and transforming the data, I successfully cleaned the student performance dataset. The result was a reliable, accurate, and properly formatted dataset, ready for the analysis phase. This foundational work is critical to ensure that the insights derived for the school district are valid and can lead to effective, data-driven decisions.
-                </p>
-            </section>
-
-        </main>
-
-        <!-- Footer -->
-        <footer class="text-center py-8 mt-8 border-t border-gray-200">
-            <p class="text-gray-500">© 2025 Adewale Olalekan - A Personal Data Analytics Portfolio</p>
-        </footer>
-
+  <header class="hero">
+    <div class="hero-inner">
+      <span class="hero-tag">Google Sheets · Excel · Data Cleaning</span>
+      <h1>Cleaning Data with<br /><em>Sorting & Filtering</em></h1>
+      <p>Preparing a student performance dataset for analysis using sorting and filtering techniques in spreadsheets.</p>
+      <div class="hero-meta">
+        <div class="meta-pill"><span class="dot"></span> Invalid data removed</div>
+        <div class="meta-pill"><span class="dot"></span> Missing values handled</div>
+        <div class="meta-pill"><span class="dot"></span> Data transformed for analysis</div>
+      </div>
     </div>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>Project Scenario</h2>
+      <p>As a data analyst for a large public school district in Portugal, I was tasked with preparing a dataset for an upcoming analysis. The superintendent wanted to understand the factors affecting student grades in two high schools: <strong>Gabriel Pereira (GP)</strong> and <strong>Mouzinho da Silveira (MS)</strong>.</p>
+
+      <h3>The Challenge</h3>
+      <p>The raw dataset — collected from academic reports and student surveys — contained student grades, background information, and study habits. Before any analysis could be performed, it was critical to clean the data. An analysis built on dirty data could lead to flawed conclusions and ineffective policy changes.</p>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Data Cleaning Process</h2>
+
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <strong>Initial Exploration with Sorting</strong>
+            <p>Performed a multi-level sort on the dataset: first by school (A–Z), then by age (Z–A). This immediately revealed a problem — the age range showed students as old as 22, which was suspicious for a high school dataset and likely represented data entry errors.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <strong>Removing Invalid Data with Filtering</strong>
+            <p>After confirming with the superintendent that the valid age range was 15–19, I applied a filter to the age column to isolate entries with ages 20, 21, and 22. The nine affected rows were deleted, ensuring the age data was accurate.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <strong>Handling Missing Values</strong>
+            <p>The reason column (why a student chose their school) was important for analysis but contained blank cells. I filtered for blanks and filled each one with a consistent placeholder — <code>none_given</code> — using the fill handle to apply the change efficiently across all affected rows.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <strong>Transforming Data for Analysis</strong>
+            <p>The Medu (mother's education) and Fedu (father's education) columns were stored as text (e.g. "higher education"), which is unsuitable for statistical calculations. I used Find & Replace to systematically convert each education level to a numeric code (e.g. "higher education" → 4) across both columns.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Project Outcome</h2>
+      <p>Through this methodical process of sorting, filtering, and transformation, the student performance dataset was cleaned into a reliable, accurate, and properly formatted state — ready for the analysis phase.</p>
+
+      <div class="callout">
+        <strong>Key takeaway:</strong> Foundational data cleaning work like this is what ensures that insights derived for the school district are valid and can lead to effective, data-driven decisions. Garbage in, garbage out — clean data is the starting point for everything.
+      </div>
+
+      <h3>Tools Used</h3>
+      <div class="tech-list">
+        <span class="tech-badge">Google Sheets</span>
+        <span class="tech-badge">Microsoft Excel</span>
+        <span class="tech-badge">Sorting</span>
+        <span class="tech-badge">Filtering</span>
+        <span class="tech-badge">Find & Replace</span>
+        <span class="tech-badge">Fill Handle</span>
+      </div>
+
+      <div class="links-row">
+        <a class="btn btn-outline" href="https://adewaleolalekan.github.io/data_analytics_portfolio/">← Back to Portfolio</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2025 <a href="https://adewaleolalekan.github.io/data_analytics_portfolio/">Adewale Olalekan</a> – Data Analytics Portfolio
+  </footer>
 
 </body>
 </html>
